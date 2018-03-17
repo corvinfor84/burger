@@ -1,0 +1,66 @@
+<div class="jumbotron" style = "text-align: center;">
+  <div class="container">
+    <h1>Eat The Burger</h1>
+  </div>
+</div>
+
+<div class="col-lg-4">
+  <div class="panel panel-dark">
+    <div class="panel-heading">
+      <h3 class="panel-title">Burgers to be eaten!</h3>
+    </div>
+    <div class="panel-body">
+      {{#each burgers}}
+        {{#unless this.devoured}}
+        <div class = "well">
+            
+            <form action="burgers/update/{{this.id}}?_method=PUT" method="POST">
+              <input type="hidden" name="devoured" value="true">
+              <br />
+              <span>{{this.id}}. {{this.burger_name}}<button type="submit" class="btn btn-dark" style = "margin-left: 20px;">Eat it!</button></span>
+            </form>
+          <br />
+        </div>  
+        {{/unless}}
+      {{/each}}
+    </div>
+  </div>
+</div>
+
+<div class="col-lg-4">
+  <div class="panel panel-dark">
+    <div class="panel-heading">
+      <h3 class="panel-title">Add a Burger</h3>
+    </div>
+    <div class="panel-body">
+      <form class="create-update-form" action="burgers/create" method="POST">
+        <div class="form-group">
+          <label for="newBurger">Burger Name:</label>
+          <input type="hidden" name="devoured" value="0">
+          <input type="text" id="newBurger" name="burger_name">
+          <br />
+          <br />
+          <button type="submit" class="btn btn-dark center-block">Add Burger</button>
+        </div>   
+      </form>
+    </div>
+  </div> 
+</div>
+
+<div class="col-lg-4">
+  <div class="panel panel-dark">
+    <div class="panel-heading">
+      <h3 class="panel-title">Burgers that you've eaten</h3>
+    </div>
+    <div class="panel-body">
+      {{#each burgers}}
+        {{#if this.devoured}}
+           {{this.id}}. {{this.burger_name}}
+            <form action="burgers/update/{{this.id}}?_method=PUT" method="POST">
+              <input type="hidden" name="devoured" value="false">
+            </form>
+        {{/if}}
+      {{/each}}
+    </div>
+  </div>    
+</div>
